@@ -1,0 +1,34 @@
+{
+  "name": "udacity-image-processing-api",
+  "version": "1.0.0",
+  "description": "An api for resizing images",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eyongkevin/Udacity-Image-Processing-API.git"
+  },
+  "keywords": [
+    "Nodejs",
+    "typescript",
+    "express",
+    "sharp",
+    "jest",
+    "prettier",
+    "eslint"
+  ],
+  "author": "Eyong Kevin Enowanyo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eyongkevin/Udacity-Image-Processing-API/issues"
+  },
+  "homepage": "https://github.com/Eyongkevin/Udacity-Image-Processing-API#readme",
+  "devDependencies": {
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
