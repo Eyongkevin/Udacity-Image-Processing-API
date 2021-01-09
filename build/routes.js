@@ -2,12 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.routes = void 0;
 var IndexController_1 = require("./controllers/IndexController");
-var logger_1 = require("./middleware/logger");
 var _routes = [['/', IndexController_1.IndexController]];
 var routes = function (app) {
     _routes.forEach(function (route) {
         var url = route[0], controller = route[1];
-        app.use(logger_1.morganMiddleware);
         app.use(url, controller);
     });
 };
