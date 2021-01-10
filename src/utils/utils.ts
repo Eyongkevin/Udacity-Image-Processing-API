@@ -1,7 +1,19 @@
 import path from 'path';
 
-export const imagesPath = (dirname: string) => {
+interface imageDirs {
+  inputPath: string;
+  outputPath: string;
+}
+export const imagesPath = (dirname: string): imageDirs => {
   const pathList = dirname.split(path.sep);
   pathList.pop();
-  return path.join(pathList.join(path.sep), 'public', 'images', 'full');
+  return {
+    inputPath: path.join(pathList.join(path.sep), 'public', 'images', 'full'),
+    outputPath: path.join(
+      pathList.join(path.sep),
+      'public',
+      'images',
+      'thumbnails'
+    )
+  };
 };

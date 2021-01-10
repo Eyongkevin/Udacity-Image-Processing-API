@@ -1,18 +1,19 @@
 import sharp from 'sharp';
 import fs from 'fs';
 
-// interface TransformSizeType {
-//   height: number;
-//   width: number;
-// }
-
 export default function resize(
-  path: string,
+  inputPath: string,
+  outputPath: string,
   format: string,
   width: number,
   height: number
 ) {
-  const readStream = fs.createReadStream(path);
+  const readStream = fs.createReadStream(inputPath);
+  const writeStream = fs.createWriteStream(outputPath);
+
+  writeStream.on('error', () => console.log('Error'));
+  writeStream.on('close', () => console.log('Successfully saved'));
+
   let transform = sharp();
 
   if (format === 'jpeg' || format === 'png') {
@@ -20,8 +21,10 @@ export default function resize(
   }
 
   if (width || height) {
-    transform = transform.resize(width, height);
+    transform = transform
+      .resize(width, height)
+      .on('info', (fileInfo) => console.log('Successfully resized'));
   }
 
-  return readStream.pipe(transform);
+  return readStream.pipe(transform).pipe(writeStream);
 }
