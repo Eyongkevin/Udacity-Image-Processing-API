@@ -39,31 +39,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IndexController = void 0;
-var express_1 = require("express");
-var path_1 = __importDefault(require("path"));
-var transformImage_1 = __importDefault(require("../modules/transformImage"));
-var utils_1 = require("../utils/utils");
-exports.IndexController = express_1.Router();
-var getImagePath = utils_1.imagesPath(__dirname);
-exports.IndexController.get('/', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, h, w, f, imagePath, width, height, format;
-    return __generator(this, function (_b) {
-        try {
-            _a = req.query, h = _a.h, w = _a.w, f = _a.f;
-            imagePath = path_1.default.join(getImagePath, 'fjord.jpg');
-            width = w ? parseInt(w, 10) : 0;
-            height = h ? parseInt(h) : 0;
-            format = f ? f : 'jpeg';
-            res.type(format);
-            console.log(width, height);
-            console.log(getImagePath);
-            transformImage_1.default(imagePath, format, width, height).pipe(res);
+exports.download = void 0;
+var axios_1 = __importDefault(require("axios"));
+var fs_1 = __importDefault(require("fs"));
+var download = function (url, path) { return __awaiter(void 0, void 0, void 0, function () {
+    var response, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, axios_1.default({
+                        method: 'get',
+                        url: url,
+                        responseType: 'stream'
+                    })];
+            case 1:
+                response = _a.sent();
+                return [4 /*yield*/, response.data.pipe(fs_1.default.createWriteStream(path))];
+            case 2:
+                _a.sent();
+                console.log('Successfully downloaded!');
+                return [3 /*break*/, 4];
+            case 3:
+                err_1 = _a.sent();
+                throw new Error(err_1);
+            case 4: return [2 /*return*/];
         }
-        catch (e) {
-            next(e);
-        }
-        return [2 /*return*/];
     });
-}); });
-//# sourceMappingURL=IndexController.js.map
+}); };
+exports.download = download;
+//# sourceMappingURL=downloadImage.js.map
