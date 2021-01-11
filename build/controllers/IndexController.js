@@ -35,34 +35,56 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IndexController = void 0;
 var express_1 = require("express");
-var path_1 = __importDefault(require("path"));
-var transformImage_1 = __importDefault(require("../modules/transformImage"));
-var utils_1 = require("../utils/utils");
+// import path from 'path';
+// import fs from 'fs';
+// import resize from '../modules/transformImage';
+// import { imagesPath } from '../utils/utils';
 exports.IndexController = express_1.Router();
-var getImagePath = utils_1.imagesPath(__dirname);
-exports.IndexController.get('/', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, h, w, f, imagePath, width, height, format;
+// const { inputPath, outputPath } = imagesPath(__dirname);
+exports.IndexController.get('/*', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var finalOutputFiles, finalPath;
+    var _a;
     return __generator(this, function (_b) {
-        try {
-            _a = req.query, h = _a.h, w = _a.w, f = _a.f;
-            imagePath = path_1.default.join(getImagePath, 'fjord.jpg');
-            width = w ? parseInt(w, 10) : 0;
-            height = h ? parseInt(h) : 0;
-            format = f ? f : 'jpeg';
-            res.type(format);
-            console.log(width, height);
-            console.log(getImagePath);
-            transformImage_1.default(imagePath, format, width, height).pipe(res);
+        finalOutputFiles = [];
+        finalPath = '';
+        if (res.locals.noParams && res.locals.isInputImage) {
+            console.log('Display normal sized images');
+            next();
         }
-        catch (e) {
-            next(e);
+        else if (res.locals.noParams && !res.locals.isInputImage) {
+            console.log('Error, no images to display');
+            next();
         }
+        else if (((_a = res.locals.unResized) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+            console.log('display all sized images of that width and height');
+            finalOutputFiles = [
+                'encenadaport_500_400.jpg',
+                'fjord_500_400.jpg',
+                'icelandwaterfall_500_400.jpg',
+                'palmtunnel_500_400.jpg',
+                'santamonica_500_400.jpg'
+            ];
+            //   const { h, w } = req.query;
+            //   const width: number | null = w ? parseInt(w as string, 10) : null;
+            //   const height: number | null = h ? parseInt(h as string, 10) : null;
+            //   const subStringToTarget: string = `_${width}_${height}`;
+            //   const outputFiles: string[] = fs.readdirSync(outputPath);
+            //   finalPath = outputPath;
+            //   finalOutputFiles = outputFiles.filter((file) =>
+            //     file.includes(subStringToTarget)
+            //   );
+            //   console.log('Images to display: ', finalOutputFiles);
+        }
+        else {
+            console.log('Nothing yet');
+        }
+        res.render('index', {
+            images: finalOutputFiles,
+            path: finalPath
+        });
         return [2 /*return*/];
     });
 }); });

@@ -1,12 +1,12 @@
 import sharp from 'sharp';
 import fs from 'fs';
 
-export default function resize(
+export default async function resize(
   inputPath: string,
   outputPath: string,
   format: string,
-  width: number,
-  height: number
+  width: number | null,
+  height: number | null
 ) {
   const readStream = fs.createReadStream(inputPath);
   const writeStream = fs.createWriteStream(outputPath);
@@ -26,5 +26,5 @@ export default function resize(
       .on('info', (fileInfo) => console.log('Successfully resized'));
   }
 
-  return readStream.pipe(transform).pipe(writeStream);
+  readStream.pipe(transform).pipe(writeStream);
 }

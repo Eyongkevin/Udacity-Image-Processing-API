@@ -1,0 +1,85 @@
+*** Plan ***
+
+- process an image and save to disk
+    - image saved with the corresponding w and h
+
+- Add midleware to check if image of that size already exist and pull it. 
+    - if not, process it
+
+- Add error handling for fail to process and images not found
+
+-* Refactor to handle all images in the full-directory
+
+- Build front end.
+
+
+if (res.locals.noParams && res.locals.isInputImage) {
+      console.log('Display normal sized images');
+      next();
+    } else if (res.locals.noParams && !res.locals.isInputImage) {
+      console.log('Error, no images to display');
+      next();
+    } else if (res.locals.unResized?.length > 0) {
+      console.log('display all sized images of that width and height');
+      const { h, w } = req.query;
+      const width: number | null = w ? parseInt(w as string, 10) : null;
+      const height: number | null = h ? parseInt(h as string, 10) : null;
+
+      const subStringToTarget: string = `_${width}_${height}`;
+      const outputFiles: string[] = fs.readdirSync(outputPath);
+
+      finalPath = outputPath;
+
+      finalOutputFiles = outputFiles.filter((file) =>
+        file.includes(subStringToTarget)
+      );
+      console.log('Images to display: ', finalOutputFiles);
+    } else {
+      console.log('Nothing yet');
+    }
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> <title>Hello, world!</title>
+  </head>
+<body>
+  <ul class="timeline">
+    <% for (var i = 0; i < images.length; i++) { %>
+    <li class="timeline-yellow">
+        <div class="timeline-time">
+            <span class="date" style="text-align:left">
+            <%= images[i] %>
+        </div>
+    </li>
+    <% } %>
+</ul>
+</body>
+</html>
+
+
+
+if (res.locals.unResized?.length > 0) {
+      console.log(res.locals.unResized);
+      console.log('display all sized images of that width and height');
+      res.render('index', {
+        message: 'Display'
+      });
+    } else if (res.locals.noParams && res.locals.isInputImage) {
+      console.log('Display normal sized images');
+      res.render('index', {
+        message: 'Normal'
+      });
+    } else if (res.locals.noParams && !res.locals.isInputImage) {
+      console.log('Error, no images to display');
+      res.render('index', {
+        message: 'Error'
+      });
+    } else {
+      console.log('Nothing yet');
+      res.render('index', {
+        message: 'nothing'
+      });
+    }
