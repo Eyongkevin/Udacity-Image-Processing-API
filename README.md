@@ -23,7 +23,7 @@ npm i -D @types/express
 `npm install --save-dev rimraf`
 
 #### 5. eslint
-npx eslint --init
+`npx eslint --init`
 
 #### 6. prettier 
 `npm install --save-dev prettier`
@@ -47,7 +47,7 @@ npx eslint --init
 `npm install ejs --save`
 
 ## How to build and start the server
-The project can be build and run in the following ways
+The project can be built and run in the following ways
 ### 1. Build
 `npm run build`
 
@@ -85,7 +85,7 @@ This endpoint is used to access all images with their original sizes. We will no
 ### 2. Resize endpoint
 `http://localhost:5000/resize?w=<width>&h=<height>`
 
-Using the endpoint above, we can provide our width and height value that we want our images to be resized. 
+Using the endpoint above, we can provide our width and height value that we want our images to be resized. Check the example below
 
 `http://localhost:5000/resize?w=500&h=400`
 
@@ -100,7 +100,7 @@ If a dimension is given that has all images already resized to that dimension, n
 ## Middlewwares to be aware of
 I included two middlewares in this project. 
 ### 1. Logger Middleware 
-This is for development purposes. It logs out information about the endpoints that is been accessed. 
+This is for development purposes. It logs  information about the endpoints that is been accessed to the console. 
 
 The images below shows the logger output for accessing both the resize and home page endpoint
 
@@ -114,13 +114,13 @@ http://localhost:5000/resize
 http://localhost:5000/
 ```
 
-If you try to access an enpoint order than these, this moddleware will redirect to a page not found page as seen below
+If you try to access an enpoint order than these, this moddleware will redirect to a page not found as seen below
 
 !['pageNotFound'](./docs/images/pageNotFound.png)
 
 
 ## Handling Other Uncertainties
-This API handles situations where there are no images to resize or parameters where not provided to resize the images.
+This API handles situations where there are no images to resize or parameters are not provided to resize the images.
 
 ### 1. No images to resize
 
@@ -133,6 +133,8 @@ This API uses the directory `./public/images/full` to get images when resizing. 
 !['no images to resize'](./docs/images/noParams.png)
 
 If we are accessing the resizing endpoint, we should also provide the dimension that will be used to resize the images. If no parameter is provided, a warning message will be shown on the frontend as seen above
+
+NB: At least one parameter should be provided. We may decided to resize only the width or the height. 
 
 ## Resources
 - [Jest doc](https://jest-bot.github.io/jest/docs/getting-started.html)
