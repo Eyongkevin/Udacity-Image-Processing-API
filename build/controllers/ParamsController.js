@@ -39,79 +39,79 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resizeImage = void 0;
-// import fs from 'fs';
+exports.ParamController = void 0;
+var express_1 = require("express");
 var path_1 = __importDefault(require("path"));
 var utils_1 = require("../utils/utils");
+var checkImages_1 = require("../modules/checkImages");
+var getFinalImages_1 = require("../modules/getFinalImages");
 var transformImage_1 = __importDefault(require("../modules/transformImage"));
 var _a = utils_1.imagesPath(__dirname), inputPath = _a.inputPath, outputPath = _a.outputPath;
-var resizeImage = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, h, w, f, width, height, format, _i, _b, file, inputImage, thumbnailFile, thumbnailFilePath, e_1;
-    var _c;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+exports.ParamController = express_1.Router();
+exports.ParamController.get('/resize', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, h, w, width, height, noParams, noImagesError, finalOutputFiles, unResized, format, _i, unResized_1, file, inputImage, thumbnailFile, thumbnailFilePath, e_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                if (!(res.locals.noParams && res.locals.isInputImage)) return [3 /*break*/, 1];
-                console.log('Nothing to resize');
-                next();
-                return [3 /*break*/, 12];
-            case 1:
-                if (!(res.locals.noParams && !res.locals.isInputImage)) return [3 /*break*/, 2];
-                console.log('Error, no images to display');
-                next();
-                return [3 /*break*/, 12];
-            case 2:
-                if (!(((_c = res.locals.unResized) === null || _c === void 0 ? void 0 : _c.length) > 0)) return [3 /*break*/, 11];
-                console.log('Images need to be resized');
-                _d.label = 3;
-            case 3:
-                _d.trys.push([3, 9, , 10]);
-                _a = req.query, h = _a.h, w = _a.w, f = _a.f;
+                _a = req.query, h = _a.h, w = _a.w;
                 width = w ? parseInt(w, 10) : null;
                 height = h ? parseInt(h, 10) : null;
-                format = f ? f : 'jpeg';
-                res.type(format);
-                console.log(width, height);
-                console.log(res.locals.resizeStatus);
-                console.log(res.locals.unResized);
-                console.log(req.query);
-                _i = 0, _b = res.locals.unResized;
-                _d.label = 4;
-            case 4:
-                if (!(_i < _b.length)) return [3 /*break*/, 7];
-                file = _b[_i];
+                noParams = false;
+                noImagesError = false;
+                finalOutputFiles = [];
+                if (!(width === null && height === null)) return [3 /*break*/, 1];
+                noParams = true;
+                return [3 /*break*/, 9];
+            case 1:
+                unResized = checkImages_1.checkIfImagesExist(width, height).unResized;
+                if (!(unResized.length > 0)) return [3 /*break*/, 8];
+                _b.label = 2;
+            case 2:
+                _b.trys.push([2, 7, , 8]);
+                format = 'jpeg';
+                _i = 0, unResized_1 = unResized;
+                _b.label = 3;
+            case 3:
+                if (!(_i < unResized_1.length)) return [3 /*break*/, 6];
+                file = unResized_1[_i];
                 inputImage = path_1.default.join(inputPath, file);
                 thumbnailFile = utils_1.createThumbnailName(file, width, height);
                 thumbnailFilePath = path_1.default.join(outputPath, thumbnailFile);
                 return [4 /*yield*/, transformImage_1.default(inputImage, thumbnailFilePath, format, width, height)];
+            case 4:
+                _b.sent();
+                _b.label = 5;
             case 5:
-                _d.sent();
-                _d.label = 6;
-            case 6:
                 _i++;
-                return [3 /*break*/, 4];
-            case 7: 
-            // wait 3 seconds
-            return [4 /*yield*/, new Promise(function (resolve, reject) {
-                    setTimeout(resolve, 3000);
-                })];
+                return [3 /*break*/, 3];
+            case 6: return [3 /*break*/, 8];
+            case 7:
+                e_1 = _b.sent();
+                // error processing image goes here
+                console.log('Error occured while processing image');
+                return [3 /*break*/, 8];
             case 8:
-                // wait 3 seconds
-                _d.sent();
-                next();
-                return [3 /*break*/, 10];
-            case 9:
-                e_1 = _d.sent();
-                next(e_1);
-                return [3 /*break*/, 10];
-            case 10: return [3 /*break*/, 12];
-            case 11:
-                console.log('All images have been resized');
-                next();
-                _d.label = 12;
-            case 12: return [2 /*return*/];
+                finalOutputFiles = getFinalImages_1.finalImages(width, height, outputPath);
+                if (unResized.length < 1 && finalOutputFiles.length < 1) {
+                    noImagesError = true;
+                }
+                _b.label = 9;
+            case 9: return [4 /*yield*/, new Promise(function (resolve) {
+                    setTimeout(function () {
+                        resolve('wait before rendering');
+                    }, 1000);
+                })];
+            case 10:
+                _b.sent();
+                res.render('resize', {
+                    data: finalOutputFiles,
+                    noParams: noParams,
+                    noImagesError: noImagesError,
+                    width: width,
+                    height: height
+                });
+                return [2 /*return*/];
         }
     });
-}); };
-exports.resizeImage = resizeImage;
-//# sourceMappingURL=resizeImage.js.map
+}); });
+//# sourceMappingURL=ParamsController.js.map

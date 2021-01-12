@@ -43,7 +43,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var app_1 = require("../app");
 describe('Test IndexController', function () {
-    it("Request '/' should return 'Udacity Image Processing API'", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it("Request '/' should return staus 200", function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -51,7 +51,6 @@ describe('Test IndexController', function () {
                 case 1:
                     result = _a.sent();
                     expect(result.status).toBe(200);
-                    expect(result.body.data).toBe('Udacity Image Processing API');
                     return [2 /*return*/];
             }
         });

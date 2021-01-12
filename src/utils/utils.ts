@@ -1,10 +1,10 @@
 import path from 'path';
 
-interface imageDirs {
+export interface imageDirsTypes {
   inputPath: string;
   outputPath: string;
 }
-export const imagesPath = (dirname: string): imageDirs => {
+export const imagesPath = (dirname: string): imageDirsTypes => {
   const pathList = dirname.split(path.sep);
   pathList.pop();
   return {

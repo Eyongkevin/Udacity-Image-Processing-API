@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"> <title>Hello, world!</title>
+    <link rel="stylesheet" href="public/main.css">
+  </head>
+<body>
+  <div>
+    <h1>Udacity Image Processing API</h1>
+  </div>
+  <% if ( noImagesError ) { %>
+    <div class='noParams'>
+      <h3>Sorry!</h3>
+      <p>There is no image to resize or display</p>
+    </div>
+  <% } else if ( noParams ) { %>
+    <div class='noParams'>
+      <h3>Sorry!</h3>
+      <p>In order to resize, you must provide the width and height in the url. See example below</p>
+      <p class='example'>http://localhost:5000/resize?w=500&h=400</p>
+    </div>
+  <% } else { %>
+    <div class='image-info'>
+      <h2 class=''>Image Resized with: </h2>
+      <% if ( width && height ) { %>
+        <div><span class='param'>Width</span>: <%= width %></div>
+        <div><span class='param'>Height</span>: <%= height %></div>
+      <% } else if (width) { %>
+        <div><span class='param'>Width</span>: <%= width %></div>
+      <% } else if (height) { %>
+        <div><span class='param'>Height</span>: <%= height %></div>
+      <% } %>
+    </div>
+  <% } %>
+  
+  <div id="image-container">
+    <% if ( data.length > 0 ) { %>
+      <% data.forEach((img) => { %>
+        <img class='sized-image' src="public/images/thumbnails/<%= img %>">
+      <% }); %>
+    <% } %>
+  </div>
+</body>
+</html>

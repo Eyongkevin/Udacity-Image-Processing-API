@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8"> <title>Hello, world!</title>
+  <head>
+    <meta charset="utf-8"> <title>Hello, world!</title>
+    <link rel="stylesheet" href="public/main.css">
   </head>
 <body>
-  <%= message %>
+  <h1>Udacity Image Processing API</h1>
+  <% if ( data.length > 0 ) { %>
+    <div id="image-container">
+      <p>In order to resize these images, provide a url as seen below</p>
+      <p class='example'>http://localhost:5000/resize?w=500&h=400</p>
+      <% data.forEach((img) => { %>
+        <img class='sized-image' src="public/images/full/<%= img %>">
+      <% }); %>
+    </div>
+  <% } else { %>
+    <div class='noParams'>
+      <h3>Sorry!</h3>
+      <p>There is no image to display at this moment</p>
+      <p>Provide a url as seen below, you might get lucky that an image was already 
+        resized base on the height and width you will provide
+      </p>
+      <p class='example'>http://localhost:5000/resize?w=500&h=400</p>
+    </div>
+    
+  <% } %>
+  
 </body>
 </html>

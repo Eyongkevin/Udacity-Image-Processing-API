@@ -1,10 +1,10 @@
 import { Application, Router } from 'express';
 import { IndexController } from './controllers/IndexController';
-import { ParamController } from './controllers/ParamsController';
+import { ResizeController } from './controllers/ResizeController';
 
 const _routes: [string, Router][] = [
   ['/', IndexController],
-  ['/', ParamController]
+  ['/', ResizeController]
 ];
 
 export const routes = (app: Application) => {
