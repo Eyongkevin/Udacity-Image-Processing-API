@@ -50,6 +50,7 @@ npm i -D @types/express
 The project can be built and run in the following ways
 ### 1. Build
 `npm run build`
+
 !['build ts to js'](./docs/images/build.png)
 
 This command will build the typeScript code into JavaScript and save them in the `./build` folder.
