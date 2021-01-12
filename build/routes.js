@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.routes = void 0;
 var IndexController_1 = require("./controllers/IndexController");
-var ParamsController_1 = require("./controllers/ParamsController");
+var ResizeController_1 = require("./controllers/ResizeController");
 var _routes = [
     ['/', IndexController_1.IndexController],
-    ['/', ParamsController_1.ParamController]
+    ['/', ResizeController_1.ResizeController]
 ];
 var routes = function (app) {
     _routes.forEach(function (route) {

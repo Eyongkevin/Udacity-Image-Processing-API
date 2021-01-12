@@ -39,23 +39,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ParamController = void 0;
+exports.ResizeController = void 0;
 var express_1 = require("express");
 var path_1 = __importDefault(require("path"));
 var utils_1 = require("../utils/utils");
 var checkImages_1 = require("../modules/checkImages");
 var getFinalImages_1 = require("../modules/getFinalImages");
 var transformImage_1 = __importDefault(require("../modules/transformImage"));
-var _a = utils_1.imagesPath(__dirname), inputPath = _a.inputPath, outputPath = _a.outputPath;
-exports.ParamController = express_1.Router();
-exports.ParamController.get('/resize', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, h, w, width, height, noParams, noImagesError, finalOutputFiles, unResized, format, _i, unResized_1, file, inputImage, thumbnailFile, thumbnailFilePath, e_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+exports.ResizeController = express_1.Router();
+exports.ResizeController.get('/resize', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, h, w, width, height, _b, inputPath, outputPath, noParams, noImagesError, finalOutputFiles, unResized, format, _i, unResized_1, file, inputImage, thumbnailFile, thumbnailFilePath, e_1;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 _a = req.query, h = _a.h, w = _a.w;
                 width = w ? parseInt(w, 10) : null;
                 height = h ? parseInt(h, 10) : null;
+                _b = utils_1.imagesPath(__dirname), inputPath = _b.inputPath, outputPath = _b.outputPath;
                 noParams = false;
                 noImagesError = false;
                 finalOutputFiles = [];
@@ -65,12 +65,12 @@ exports.ParamController.get('/resize', function (req, res, next) { return __awai
             case 1:
                 unResized = checkImages_1.checkIfImagesExist(width, height).unResized;
                 if (!(unResized.length > 0)) return [3 /*break*/, 8];
-                _b.label = 2;
+                _c.label = 2;
             case 2:
-                _b.trys.push([2, 7, , 8]);
+                _c.trys.push([2, 7, , 8]);
                 format = 'jpeg';
                 _i = 0, unResized_1 = unResized;
-                _b.label = 3;
+                _c.label = 3;
             case 3:
                 if (!(_i < unResized_1.length)) return [3 /*break*/, 6];
                 file = unResized_1[_i];
@@ -79,14 +79,14 @@ exports.ParamController.get('/resize', function (req, res, next) { return __awai
                 thumbnailFilePath = path_1.default.join(outputPath, thumbnailFile);
                 return [4 /*yield*/, transformImage_1.default(inputImage, thumbnailFilePath, format, width, height)];
             case 4:
-                _b.sent();
-                _b.label = 5;
+                _c.sent();
+                _c.label = 5;
             case 5:
                 _i++;
                 return [3 /*break*/, 3];
             case 6: return [3 /*break*/, 8];
             case 7:
-                e_1 = _b.sent();
+                e_1 = _c.sent();
                 // error processing image goes here
                 console.log('Error occured while processing image');
                 return [3 /*break*/, 8];
@@ -95,14 +95,14 @@ exports.ParamController.get('/resize', function (req, res, next) { return __awai
                 if (unResized.length < 1 && finalOutputFiles.length < 1) {
                     noImagesError = true;
                 }
-                _b.label = 9;
+                _c.label = 9;
             case 9: return [4 /*yield*/, new Promise(function (resolve) {
                     setTimeout(function () {
                         resolve('wait before rendering');
                     }, 1000);
                 })];
             case 10:
-                _b.sent();
+                _c.sent();
                 res.render('resize', {
                     data: finalOutputFiles,
                     noParams: noParams,
@@ -114,4 +114,4 @@ exports.ParamController.get('/resize', function (req, res, next) { return __awai
         }
     });
 }); });
-//# sourceMappingURL=ParamsController.js.map
+//# sourceMappingURL=ResizeController.js.map
