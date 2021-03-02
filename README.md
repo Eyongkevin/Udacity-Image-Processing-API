@@ -48,14 +48,17 @@ npm i -D @types/express
 
 ## How to build and start the server
 The project can be built and run in the following ways
-### 1. Build
+### 1. Install all dependencies 
+`npm install`
+
+### 2. Build
 `npm run build`
 
 !['build ts to js'](./docs/images/build.png)
 
 This command will build the typeScript code into JavaScript and save them in the `./build` folder.
 
-### 2. Start the Server
+### 3. Start the Server
 `npm start`
 
 This command will start the server running on port `5000`. And the front end homepage will be accessible at `http://localhost:5000`
@@ -92,6 +95,14 @@ Using the endpoint above, we can provide our width and height value that we want
 `http://localhost:5000/resize?w=500&h=400`
 
 !['resized image'](./docs/images/resize_500_400.png)
+
+
+
+
+`http://localhost:5000/resize?w=200&h=200`
+
+!['resized image'](./docs/images/resize_200_200.png)
+
 
 This endpoint is used to resize all images found in the `public/images/full` directory and saving them in the `public/images/thumbnails` directory. Then, it will serve these images to the frontend to be viewed. 
 
